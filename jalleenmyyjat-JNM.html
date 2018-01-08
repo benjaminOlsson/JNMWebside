@@ -1,0 +1,1256 @@
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="table.css">
+</head>
+<table id="searchTable">
+  <tbody id="searchTableBody">
+    <tr id="searchTableRow">
+      <td class="searchTableData">
+        <input type="text" id="searchValue">
+      </td>
+      <td class="searchTableData">
+        <select id="type">
+          <option value="nimi">Nimi</option>
+          <option value="kaupunki">Kaupunki</option>
+          <option value="postinumero">Postinumero</option>
+        </select>
+      </td>
+      <td class="searchTableData">
+        <button type="submit" name="submit" id="searchButton">Search</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table id="jalleenmyyjatTable">
+  <tbody id="jalleenmyyjatTableBody">
+    <tr id="jalleenmyyjatTableRow">
+      <th class="jalleenmyyjatTableHead">Nimi:</th>
+      <th class="jalleenmyyjatTableHead">Osoite:</th>
+      <th class="jalleenmyyjatTableHead">Puhelinnumero</th>
+      <th class="jalleenmyyjatTableHead">Linkki</th>
+    </tr>
+  </tbody>
+</table>
+<script type="text/javascript">
+// The setting up the stores and a function for displaying all stores when user loads the window
+  // The object array with the info about all the stores
+  var result = [
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Aleksanterinkatu 23',
+      stad: 'helsinki',
+      postnummer: '00100',
+      telefon: '010 405 4200',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Kamppi',
+      stad: 'helsinki',
+      postnummer: '00100',
+      telefon: '010 405 4460',
+      lank: ''
+    },
+    {
+      namn: 'Akateeminen Kirjakauppa',
+      adress: 'Keskuskatu 1/ Pohjoisesplanaadi 39',
+      stad: 'helsinki',
+      postnummer: '00100',
+      telefon: '046 876 1252',
+      lank: ''
+    },
+    {
+      namn: 'Gulf Liuskaluoto',
+      adress: 'Merisatamanranta / Liuskaluoto',
+      stad: 'helsinki',
+      postnummer: '00140',
+      telefon: '050 300 9553',
+      lank: ''
+    },
+    {
+      namn: 'Marinekauppa / Norcap Oy Ab',
+      adress: 'Henry Fordin katu 5 C, 2. krs',
+      stad: 'helsinki',
+      postnummer: ' 00150',
+      telefon: '010 548 5605',
+      lank: ''
+    },
+    {
+      namn: 'Maritim Oy Ab',
+      adress: 'Veneentekijäntie 1',
+      stad: 'helsinki',
+      postnummer: '00210',
+      telefon: '020 765 181',
+      lank: ''
+    },
+    {
+      namn: 'ProSailor Oy',
+      adress: 'Veneentekijäntie 14',
+      stad: 'helsinki',
+      postnummer: '00210',
+      telefon: '(09)682 3900',
+      lank: ''
+    },
+    {
+      namn: 'Captain \'s Shop \/ Vestek Ab',
+      adress: 'Veneentekijäntie 11',
+      stad: 'helsinki',
+      postnummer: '00210',
+      telefon: '(09)682 2512',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Munkkivuoren ostoskeskus',
+      stad: 'helsinki',
+      postnummer: '00350',
+      telefon: '010 405 4320',
+      lank: ''
+    },
+    {
+      namn: 'Aalto Group Oy\/ Varuste.net',
+      adress: 'Ruosilankatu 3',
+      stad: 'helsinki',
+      postnummer: '00390',
+      telefon: '(09)454 0707',
+      lank: ''
+    },
+    {
+      namn: 'Marinea\/ Helsingin Venevaruste Oy',
+      adress: 'Sörnäisten rantatie 29',
+      stad: 'helsinki',
+      postnummer: '00500',
+      telefon: '010 231 2000',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa',
+      adress: 'Kauppakeskus Malmin Nova',
+      stad: 'helsinki',
+      postnummer: '00700',
+      telefon: '010 405 4310',
+      lank: ''
+    },
+    {
+      namn: 'Waltic Oy',
+      adress: 'Simppukarinkatu 3',
+      stad: 'helsinki',
+      postnummer: '00810',
+      telefon: '020 7558920',
+      lank: ''
+    },
+    {
+      namn: 'Sea Store Oy',
+      adress: 'Kipparlahti Herttoniemi',
+      stad: 'helsinki',
+      postnummer: '00810',
+      telefon: '050 305 8900',
+      lank: ''
+    },
+    {
+      namn: 'Corolio Oy',
+      adress: 'Niittaajankatu 2',
+      stad: 'helsinki',
+      postnummer: '00810',
+      telefon: '0440 353 331',
+      lank: ''
+    },
+    {
+      namn: 'Safety At Sea Finland Marnela Oy Ltd',
+      adress: 'Isonsarvastontie 8',
+      stad: 'helsinki',
+      postnummer: '00840',
+      telefon: '(09)6841 7600',
+      lank: ''
+    },
+    {
+      namn: 'Herttoniemen Autokatsastus Oy',
+      adress: 'Sahaajankatu 52',
+      stad: 'helsinki',
+      postnummer: '00880',
+      telefon: '(09)759 1167',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Itis',
+      stad: 'helsinki',
+      postnummer: '00930',
+      telefon: '010 405 4300',
+      lank: ''
+    },
+    {
+      namn: 'Akateeminen Kirjakauppa',
+      adress: 'Kauppakeskus Itis',
+      stad: 'helsinki',
+      postnummer: '00930',
+      telefon: '046 876 1088',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Columbus',
+      stad: 'helsinki',
+      postnummer: '00980',
+      telefon: '010 405 4370',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Tikkuraitti 18',
+      stad: 'vantaa',
+      postnummer: '01300',
+      telefon: '010 405 4480',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Jumbo, Vantaanportti 3',
+      stad: 'vantaa',
+      postnummer: '01510',
+      telefon: '010 405 4490',
+      lank: ''
+    },
+    {
+      namn: 'Akateeminen Kirjakauppa',
+      adress: 'Tikkuraitti 18',
+      stad: 'vantaa',
+      postnummer: '01510',
+      telefon: '046 876 1056',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Myyrmanni',
+      stad: 'vantaa',
+      postnummer: '01600',
+      telefon: '010 405 4470',
+      lank: ''
+    },
+    {
+      namn: 'Akateeminen Kirjakauppa',
+      adress: 'Länsituulentie 10',
+      stad: 'espoo',
+      postnummer: '02100',
+      telefon: '046 876 1113',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Iso Omena',
+      stad: 'espoo',
+      postnummer: '02230',
+      telefon: '010 405 4420',
+      lank: ''
+    },
+    {
+      namn: 'Vestek Ab',
+      adress: 'Martinkuja 4',
+      stad: 'espoo',
+      postnummer: '02270',
+      telefon: '(09)887 0120',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Lippulaiva',
+      stad: 'espoo',
+      postnummer: '02320',
+      telefon: '010 405 4410',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Sello',
+      stad: 'espoo',
+      postnummer: '02600',
+      telefon: '010 405 2350',
+      lank: ''
+    },
+    {
+      namn: 'W&W Marine Oy Ab',
+      adress: 'Kalkkirannantie 50',
+      stad: 'kalkkiranta',
+      postnummer: '01180',
+      telefon: '(09)272 8615',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakaari 8',
+      stad: 'kerava',
+      postnummer: '04200',
+      telefon: '010 405 5810',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Prisma-keskus, Rantakatu 5',
+      stad: 'Järvenpää',
+      postnummer: '04400',
+      telefon: '010 405 5820',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Willa, Torikatu 7',
+      stad: 'Hyvinkää',
+      postnummer: '05800',
+      telefon: '010 405 3140',
+      lank: ''
+    },
+    {
+      namn: 'E3-Marin',
+      adress: 'Ratsumestarinkatu 6',
+      stad: 'porvoo',
+      postnummer: '06100',
+      telefon: '(019)633 206',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Rauhankatu 27',
+      stad: 'porvoo',
+      postnummer: '06100',
+      telefon: '010 405 5120',
+      lank: ''
+    },
+    {
+      namn: 'Loviisan Kirjakauppa Oy\/ Lovisa Bokhandel Ab',
+      adress: 'Kuningattarenkatu 11',
+      stad: 'loviisa',
+      postnummer: '07900',
+      telefon: '(019)533 223',
+      lank: ''
+    },
+    {
+      namn: 'Varvet Marina Ky',
+      adress: 'Aleksanterinkatu 4',
+      stad: 'loviisa',
+      postnummer: '07900',
+      telefon: '(019)535 149',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Laurinkatu 48',
+      stad: 'lohja',
+      postnummer: '08100',
+      telefon: '010 405 5110',
+      lank: ''
+    },
+    {
+      namn: 'Venemyynti Lindberg Oy',
+      adress: 'Virkkalantie 10',
+      stad: 'lohja',
+      postnummer: '08700',
+      telefon: '(019)342 602',
+      lank: ''
+    },
+    {
+      namn: 'Strand Shop',
+      adress: 'Rantatie 3',
+      stad: 'inkoo',
+      postnummer: '10210',
+      telefon: '(09)221 1024',
+      lank: ''
+    },
+    {
+      namn: 'AD-Center Karjaa',
+      adress: 'Uikkukuja 2',
+      stad: 'karjaa',
+      postnummer: '10320',
+      telefon: '(019)212 7400',
+      lank: ''
+    },
+    {
+      namn: 'AD-Center Tammisaari',
+      adress: 'Teknikontie 11',
+      stad: 'tammisaari',
+      postnummer: '10600',
+      telefon: '(019)212 7500',
+      lank: ''
+    },
+    {
+      namn: 'Ekenäs Bildel',
+      adress: 'Pohjoinen Rantakatu 2',
+      stad: 'tammisaari',
+      postnummer: '10600',
+      telefon: '(019)241 2236',
+      lank: ''
+    },
+    {
+      namn: 'Kungsbokhandeln-Kuninkaan kirja Ab Oy',
+      adress: 'Kuninkaankatu 8',
+      stad: 'tammisaari',
+      postnummer: '10600',
+      telefon: '(019)246 1028',
+      lank: ''
+    },
+    {
+      namn: 'Premarin Oy Ab',
+      adress: 'Järnösalmentie 92',
+      stad: 'lappohja',
+      postnummer: '10820',
+      telefon: '0207 619 161',
+      lank: ''
+    },
+    {
+      namn: 'Tian Kirja',
+      adress: 'Vuorikatu 10',
+      stad: 'hanko',
+      postnummer: '10900',
+      telefon: '(019)248 6060',
+      lank: ''
+    },
+    {
+      namn: 'Ky Hangon Auto- ja Venetalo- Bil och Båtjuset',
+      adress: 'Esplanaadi 130',
+      stad: 'hanko',
+      postnummer: '10901',
+      telefon: '(019)267 6700',
+      lank: ''
+    },
+    {
+      namn: 'Kb VN-Marine Ky',
+      adress: 'Esso, Itäsatama',
+      stad: 'hanko',
+      postnummer: '10901',
+      telefon: '(019)248 5570',
+      lank: ''
+    },
+    {
+      namn: 'Uusi Kirjakauppa Oy',
+      adress: 'Hämeenkatu 36',
+      stad: 'riihimäki',
+      postnummer: '11100',
+      telefon: '(019)732 775',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Keskuskatu 15',
+      stad: 'riihimäki',
+      postnummer: '11100',
+      telefon: '010 405 5130',
+      lank: ''
+    },
+    {
+      namn: 'Kirja&Idea/ Hämeenlinnan Kirjakauppa Oy',
+      adress: 'Kauppakeskus Goodman',
+      stad: 'hämeenlinna',
+      postnummer: '13101',
+      telefon: '(03)644 010',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Raatihuoneenkatu 23',
+      stad: 'hämeenlinna',
+      postnummer: '13100',
+      telefon: '010 405 5320',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Tapulikuja 6',
+      stad: 'forssa',
+      postnummer: '30100',
+      telefon: '010 405 5310',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Aleksanterinkatu 17',
+      stad: 'lahti',
+      postnummer: '15110',
+      telefon: '010 405 5330',
+      lank: ''
+    },
+    {
+      namn: 'Vene-Turiainen Oy',
+      adress: 'Jalkarannantie 23',
+      stad: 'lahti',
+      postnummer: '15900',
+      telefon: '(03)751 2000',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kirkkokatu 12B',
+      stad: 'heinola',
+      postnummer: '18100',
+      telefon: '010 405 3130',
+      lank: ''
+    },
+    {
+      namn: 'Nautikulma Oy',
+      adress: 'Läntinen Pitkäkatu 33',
+      stad: 'turku',
+      postnummer: '20100',
+      telefon: '(02)250 3444',
+      lank: ''
+    },
+    {
+      namn: 'Meredin\/ Ulkoiluaitta Oy',
+      adress: 'Puolalankatu 6',
+      stad: 'turku',
+      postnummer: '20100',
+      telefon: '(02)275 275',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Hansa, Kristiinankatu 9',
+      stad: 'turku',
+      postnummer: '20100',
+      telefon: '010 405 2370',
+      lank: ''
+    },
+    {
+      namn: 'Akateeminen Kirjakauppa',
+      adress: 'Kauppakeskus Hansa, Eerikinkatu 15',
+      stad: 'turku',
+      postnummer: '20100',
+      telefon: '046 876 1735',
+      lank: ''
+    },
+    {
+      namn: 'Turun Kansallinen Kirjakauppa Oy',
+      adress: 'Linnakatu 16',
+      stad: 'turku',
+      postnummer: '20100',
+      telefon: '(02)283 1000',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Skanssi',
+      stad: 'turku',
+      postnummer: '20730',
+      telefon: '010 405 2380',
+      lank: ''
+    },
+    {
+      namn: 'Raision Kirja Oy',
+      adress: 'Tuulensuunkatu 8',
+      stad: 'naantali',
+      postnummer: '21100',
+      telefon: '(02)431 0750',
+      lank: ''
+    },
+    {
+      namn: 'Raisioranta\/ Powerduo Oy',
+      adress: 'Hahdenniementie 2',
+      stad: 'raisio',
+      postnummer: '21120',
+      telefon: '(02)433 9990',
+      lank: ''
+    },
+    {
+      namn: 'Kea-Marin',
+      adress: 'Purokatu 7',
+      stad: 'raisio',
+      postnummer: '21200',
+      telefon: '(02)431 2650',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Mylly',
+      stad: 'raisio',
+      postnummer: '21280',
+      telefon: '010 405 2420',
+      lank: ''
+    },
+    {
+      namn: 'Q-Kauppa Lieto',
+      adress: 'Karjatie 3',
+      stad: 'lieto',
+      postnummer: '21420',
+      telefon: '(02)487 1291',
+      lank: ''
+    },
+    {
+      namn: 'Booklet w/w',
+      adress: 'Rantatie 16',
+      stad: 'parainen',
+      postnummer: '21600',
+      telefon: '044 525 0356',
+      lank: ''
+    },
+    {
+      namn: 'M-Market Houtskar',
+      adress: 'Näsbyntie 178',
+      stad: 'houtskar',
+      postnummer: '21760',
+      telefon: '(02)463 3255',
+      lank: ''
+    },
+    {
+      namn: 'Björklund Båtslip Kb',
+      adress: 'Norrby',
+      stad: 'iniö',
+      postnummer: '23390',
+      telefon: '(02)463 5343',
+      lank: ''
+    },
+    {
+      namn: 'Venetelatta Salmeri Oy',
+      adress: 'Veneranta 10',
+      stad: 'uusikaupunki',
+      postnummer: '23500',
+      telefon: '(02)842 3353',
+      lank: ''
+    },
+    {
+      namn: 'Kirja Vakka Oy',
+      adress: 'Alinenkatu 25',
+      stad: 'uusikaupunki',
+      postnummer: '23500',
+      telefon: '(02)842 7400',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Plaza, Vilhonkatu 8',
+      stad: 'salo',
+      postnummer: '24100',
+      telefon: '010 405 2310',
+      lank: ''
+    },
+    {
+      namn: 'Oy Kone Wuorio Maskin Ab',
+      adress: 'Wuorionkuja 4',
+      stad: 'kemiö',
+      postnummer: '25700',
+      telefon: '(02)420 6000',
+      lank: ''
+    },
+    {
+      namn: 'Vierassatama\/ Kasnäsudden Ab Oy',
+      adress: 'Kasnäsintie 1294',
+      stad: 'kasnäs',
+      postnummer: '25930',
+      telefon: '040 592 7173',
+      lank: ''
+    },
+    {
+      namn: 'Söderlunds Bok & Papper\/ Mariehamns Bokhandel',
+      adress: 'Torggatan 14',
+      stad: 'mariehamn',
+      postnummer: '22100',
+      telefon: '(018)19 745',
+      lank: ''
+    },
+    {
+      namn: 'Kalmers',
+      adress: 'Vikingagränd 11',
+      stad: 'mariehamn',
+      postnummer: '22100',
+      telefon: '(018)28 830',
+      lank: ''
+    },
+    {
+      namn: 'ÅSS Marina',
+      adress: 'Sjöpromenaden, Västra hamnen',
+      stad: 'mariehamn',
+      postnummer: '22100',
+      telefon: '(018)13 610',
+      lank: ''
+    },
+    {
+      namn: 'Lisco Bok & Pappershandel\/ Alandia Office Ab',
+      adress: 'Skarpansvägen 25',
+      stad: 'mariehamn',
+      postnummer: '22100',
+      telefon: '(018)17 177',
+      lank: ''
+    },
+    {
+      namn: 'Wemarin Ab',
+      adress: 'Skarpansvägen 20',
+      stad: 'mariehamn',
+      postnummer: '22100',
+      telefon: '(018)12 990',
+      lank: ''
+    },
+    {
+      namn: 'Petäjäksen Telakka Oy',
+      adress: 'Kompintie 7',
+      stad: 'rauma',
+      postnummer: '26100',
+      telefon: '(02)824 1041',
+      lank: ''
+    },
+    {
+      namn: 'Info-Kirjakauppa Rauma Oy',
+      adress: 'Kauppakeskus Potkur, Kauppakatu 3',
+      stad: 'rauma',
+      postnummer: '26100',
+      telefon: '(02)549 4000',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Wänni, Nortamonkatu 10',
+      stad: 'rauma',
+      postnummer: '26100',
+      telefon: '010 405 2400',
+      lank: ''
+    },
+    {
+      namn: 'Venepori Oy',
+      adress: 'Karjarannantie 35',
+      stad: 'pori',
+      postnummer: '28100',
+      telefon: '(02)631 7400',
+      lank: ''
+    },
+    {
+      namn: 'Info Porin Kirjakauppa Oy',
+      adress: 'Antinkatu 15',
+      stad: 'pori',
+      postnummer: '28100',
+      telefon: '(02)6101 4000',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Yrjönkatu 13',
+      stad: 'pori',
+      postnummer: '28100',
+      telefon: '010 405 5210',
+      lank: ''
+    },
+    {
+      namn: 'Akateeminen Kirjakauppa',
+      adress: 'Hämeenkatu',
+      stad: 'tampere',
+      postnummer: '33100',
+      telefon: '046 876 1609',
+      lank: ''
+    },
+    {
+      namn: 'Kirja Kärkkäinen Oy',
+      adress: 'Koskikeskus, Hatanpään valtatie 1',
+      stad: 'tampere',
+      postnummer: '33100',
+      telefon: '(03)225 1800',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Koskikeskus, Hatanpään valtatie 1',
+      stad: 'tampere',
+      postnummer: '33100',
+      telefon: '010 405 4530',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Hämeenkatu 5',
+      stad: 'tampere',
+      postnummer: '33100',
+      telefon: '010 405 2340',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Hämeenkatu 18(Kauppakatu)',
+      stad: 'tampere',
+      postnummer: '33200',
+      telefon: '010 405 2410',
+      lank: ''
+    },
+    {
+      namn: 'Vinhan Kirjakauppa',
+      adress: 'Ruovedentie 15',
+      stad: 'ruovesi',
+      postnummer: '34600',
+      telefon: '(03)467 2281',
+      lank: ''
+    },
+    {
+      namn: 'Tyrvään Kirjakauppa Oy INFO',
+      adress: 'Marttilankatu 18',
+      stad: 'sastamala',
+      postnummer: '38200',
+      telefon: '020 733 8480',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakatu 33',
+      stad: 'jyväskylä',
+      postnummer: '40100',
+      telefon: '010 405 4710',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Koskentie 5',
+      stad: 'jämsä',
+      postnummer: '42100',
+      telefon: '010 405 4730',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Veturi, Tervasharjunkatu 1',
+      stad: 'kuusankoski',
+      postnummer: '45720',
+      telefon: '010 405 2130',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Ruotsinsalmenkatu 12B',
+      stad: 'kotka',
+      postnummer: '48100',
+      telefon: '010 405 2120',
+      lank: ''
+    },
+    {
+      namn: 'Veleiro Oy',
+      adress: 'Vasikkasaarentie 25-51',
+      stad: 'kotka',
+      postnummer: '48200',
+      telefon: '(05)210 9560',
+      lank: ''
+    },
+    {
+      namn: 'LekeMarin Oy',
+      adress: 'Seppolantie 5B',
+      stad: 'kotka',
+      postnummer: '48230',
+      telefon: '020 779 1400',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Isoympyränkatu 17',
+      stad: 'hamina',
+      postnummer: '49400',
+      telefon: '010 405 5410',
+      lank: ''
+    },
+    {
+      namn: 'Seppälän Vene-Tarvike Oy',
+      adress: 'Mäkelänkankaantie 18',
+      stad: 'neuvoton',
+      postnummer: '49490',
+      telefon: '0400 750 944',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Stella, Maaherrankatu 13',
+      stad: 'mikkeli',
+      postnummer: '50100',
+      telefon: '010 405 4810',
+      lank: ''
+    },
+    {
+      namn: 'Anttolan Kone ja Urheilu Oy',
+      adress: 'Satamatie 10',
+      stad: 'anttola',
+      postnummer: '52100',
+      telefon: '(015)660 442',
+      lank: ''
+    },
+    {
+      namn: 'VS-Marin Oy',
+      adress: 'Kirkonlahdenkatu 10',
+      stad: 'savonlinna',
+      postnummer: '57100',
+      telefon: '(015)273 090',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Olavinkatu 45',
+      stad: 'savonlinna',
+      postnummer: '57100',
+      telefon: '010 405 4820',
+      lank: ''
+    },
+    {
+      namn: 'Saimaan Vuokravenho',
+      adress: 'Kiurunkatu 15',
+      stad: 'savonlinna',
+      postnummer: '57230',
+      telefon: '0400 673 055',
+      lank: ''
+    },
+    {
+      namn: 'UK Koskimies',
+      adress: 'Ratakatu 37-39',
+      stad: 'lappeenranta',
+      postnummer: '53100',
+      telefon: '(05)6129 000',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa',
+      adress: 'Kauppakeskus IsoKristiina, Brahenkatu 5',
+      stad: 'lappeenranta',
+      postnummer: '53100',
+      telefon: '010 405 2180',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Koskenparras 3',
+      stad: 'imatra',
+      postnummer: '55100',
+      telefon: '010 405 3160',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Epstori, Kauppakatu 5',
+      stad: 'seinäjoki',
+      postnummer: '60100',
+      telefon: '010 405 5520',
+      lank: ''
+    },
+    {
+      namn: 'Kristiinan Kirja- ja Värikauppa Oy',
+      adress: 'Merikatu 35',
+      stad: 'kristiinankaupunki',
+      postnummer: '64100',
+      telefon: '(06)221 3390',
+      lank: ''
+    },
+    {
+      namn: 'Fantoy Oy Ab',
+      adress: 'Opistokatu 11',
+      stad: 'vaasa',
+      postnummer: '65100',
+      telefon: '(06)362 0888',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Rewell Center, Raastuvankatu 19',
+      stad: 'vaasa',
+      postnummer: '65100',
+      telefon: '010 405 5510',
+      lank: ''
+    },
+    {
+      namn: 'Herlers Bokhandel Kb Ky',
+      adress: 'Topeliuksenpuistikko 12',
+      stad: 'uusikaarlepyy',
+      postnummer: '66900',
+      telefon: '044 360 6865',
+      lank: ''
+    },
+    {
+      namn: 'Ab Jakobstads Bokhandel - Pietarsaaren Kirjakauppa',
+      adress: 'Isokatu 11',
+      stad: 'pietarsaari',
+      postnummer: '68600',
+      telefon: '(06)723 0889',
+      lank: ''
+    },
+    {
+      namn: 'Navitek Oy Ab',
+      adress: 'Vaunusepäntie 4',
+      stad: 'pietarsaari',
+      postnummer: '68600',
+      telefon: '(06)723 0889',
+      lank: ''
+    },
+    {
+      namn: 'Akku-Teho Marine Oy',
+      adress: 'Tehtaankatu 14-16',
+      stad: 'kokkola',
+      postnummer: '67100',
+      telefon: '(06)831 2970',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Ou',
+      adress: 'Kauppakeskus Chydenia, Tehtaankatu 3-5',
+      stad: 'kokkola',
+      postnummer: '67100',
+      telefon: '010 405 2110',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Minna, Haapaniemenkatu 18',
+      stad: 'kuopio',
+      postnummer: '70110',
+      telefon: '010 405 5010',
+      lank: ''
+    },
+    {
+      namn: 'Savon Palokalusto Oy',
+      adress: 'Liipasintie 8',
+      stad: 'kuopio',
+      postnummer: '70460',
+      telefon: '(017)264 7220',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Matkus Shoppin Center, Matkuksentie 60',
+      stad: 'kuopio',
+      postnummer: '70800',
+      telefon: '010 405 5020',
+      lank: ''
+    },
+    {
+      namn: 'Siilinjärven Kirjakauppa Ky',
+      adress: 'Kuiluntie 5',
+      stad: 'siilinjärvi',
+      postnummer: '71800',
+      telefon: '(017)462 5720',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Louhenkatu 7',
+      stad: 'iisalmi',
+      postnummer: '74100',
+      telefon: '010 405 3150',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakatu 43',
+      stad: 'varkaus',
+      postnummer: '78200',
+      telefon: '010 405 5030',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Iso Mylly, Torikatu 25',
+      stad: 'joensuu',
+      postnummer: '80100',
+      telefon: '010 405 4610',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakatu 10-12',
+      stad: 'kajaani',
+      postnummer: '87100',
+      telefon: '010 405 5640',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Valkea, Isokatu 24-25',
+      stad: 'oulu',
+      postnummer: '90100',
+      telefon: '010 405 5630',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kirkkokatu 43',
+      stad: 'raahe',
+      postnummer: '92100',
+      telefon: '010 405 58360',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Ouluntaival',
+      stad: 'kuusamo',
+      postnummer: '93600',
+      telefon: '010 405 5650',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Valtakatu 21-23',
+      stad: 'kemi',
+      postnummer: '94100',
+      telefon: '010 405 4930',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Rajalla, Länsiranta 19',
+      stad: 'tornio',
+      postnummer: '95400',
+      telefon: '010 405 4920',
+      lank: ''
+    },
+    {
+      namn: 'Tatun Tarvike Oy',
+      adress: 'Torpinkatu 4',
+      stad: 'tornio',
+      postnummer: '95420',
+      telefon: '020 785 0840',
+      lank: ''
+    },
+    {
+      namn: 'Suomalainen Kirjakauppa Oy',
+      adress: 'Kauppakeskus Revontuli, Koskikatu 27',
+      stad: 'rovaniemi',
+      postnummer: '96100',
+      telefon: '010 405 4910',
+      lank: ''
+    },
+    {
+      namn: 'Lapin maanmittaustoimisto',
+      adress: 'Valtakatu 17',
+      stad: 'rovaniemi',
+      postnummer: '96100',
+      telefon: '029 530 1110',
+      lank: ''
+    },
+    {
+      namn: 'Ylä-Lapin luontokeskus Siida',
+      adress: 'Inarintie 46',
+      stad: 'inari',
+      postnummer: '99870',
+      telefon: '020 639 7740',
+      lank: ''
+    }
+  ];
+  // The object that constructs the stores
+  function addCustomer(namn, adress, stad, postnummer, telefon, lank){
+    this.name = namn;
+    this.adress = adress;
+    this.postnummer = postnummer;
+    this.stad = stad;
+    this.telefon = telefon;
+    this.lank = lank;
+    this.fullAdress = adress + ', ' + postnummer + ' ' + stad.toUpperCase();
+  };
+  // Printing everything to the website when the user loads the window
+  var table = document.getElementById('jalleenmyyjatTableBody');
+  window.onload = function(){
+    var rad = 1;
+    result.forEach(function(store){
+      var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+      var row = table.insertRow(rad);
+      var cell0 = row.insertCell(0).innerText = customer.name;
+      var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+      var cell2 = row.insertCell(2).innerText = customer.telefon;
+      var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+      ++rad;
+    });
+  };
+  //Funktion för sökandet
+  function searchResult(method, searchValue){
+    var length = table.childNodes.length -2;
+    for(let i = 1; i < length; i++){
+      table.deleteRow(1);
+    }
+    if(method === 'nimi'){
+      if(searchValue !== ''){
+        var rad = 1;
+        var hittade = 0;
+        result.forEach(function(store){
+          var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+          if(customer.name.toLowerCase() === searchValue.toLowerCase()){
+            var row = table.insertRow(rad);
+            var cell0 = row.insertCell(0).innerText = customer.name;
+            var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+            var cell2 = row.insertCell(2).innerText = customer.telefon;
+            var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+            ++rad;
+            ++hittade;
+          }
+        });
+        if(hittade === 0){
+          var row = table.insertRow(1);
+          var cell = row.insertCell(0).innerText = 'Tällä haulla ei löytynyt jälleenmyyjiä';
+        }
+      }else{
+        var rad = 1;
+        result.forEach(function(store){
+          var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+          var row = table.insertRow(rad);
+          var cell0 = row.insertCell(0).innerText = customer.name;
+          var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+          var cell2 = row.insertCell(2).innerText = customer.telefon;
+          var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+          ++rad;
+        });
+      }
+    }else if(method === 'kaupunki'){
+      if(searchValue !== ''){
+        var rad = 1;
+        var hittade = 0;
+        result.forEach(function(store){
+          var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+          if(customer.stad.toLowerCase() === searchValue.toLowerCase()){
+            var row = table.insertRow(rad);
+            var cell0 = row.insertCell(0).innerText = customer.name;
+            var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+            var cell2 = row.insertCell(2).innerText = customer.telefon;
+            var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+            ++rad;
+            ++hittade;
+          }
+        });
+        if(hittade === 0){
+          var row = table.insertRow(1);
+          var cell = row.insertCell(0).innerText = 'Tällä haulla ei löytynyt jälleenmyyjiä';
+        }
+      }else{
+        var rad = 1;
+        result.forEach(function(store){
+          var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+          var row = table.insertRow(rad);
+          var cell0 = row.insertCell(0).innerText = customer.name;
+          var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+          var cell2 = row.insertCell(2).innerText = customer.telefon;
+          var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+          ++rad;
+        });
+      }
+    }else if(method === 'postinumero'){
+      if(searchValue !== ''){
+        var rad = 1;
+        var hittade = 0;
+        result.forEach(function(store){
+          var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+          if(customer.postnummer.toLowerCase() === searchValue.toLowerCase()){
+            var row = table.insertRow(rad);
+            var cell0 = row.insertCell(0).innerText = customer.name;
+            var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+            var cell2 = row.insertCell(2).innerText = customer.telefon;
+            var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+            ++rad;
+            ++hittade;
+          }
+        });
+        if(hittade === 0){
+          var row = table.insertRow(1);
+          var cell = row.insertCell(0).innerText = 'Tällä haulla ei löytynyt jälleenmyyjiä';
+        }
+      }else{
+        var rad = 1;
+        result.forEach(function(store){
+          var customer = new addCustomer(store.namn, store.adress, store.stad, store.postnummer, store.telefon, store.lank);
+          var row = table.insertRow(rad);
+          var cell0 = row.insertCell(0).innerText = customer.name;
+          var cell1 = row.insertCell(1).innerText = customer.fullAdress;
+          var cell2 = row.insertCell(2).innerText = customer.telefon;
+          var cell3 = row.insertCell(3).innerHTML = "<a href="+ customer.lank +" id='cellLink>Mene Sivuille</a>";
+          ++rad;
+        });
+      }
+    }
+  };
+ // The search function that shows only the search result
+ var searchButton = document.getElementById('searchButton');
+  function search(){
+    var method = document.getElementById('type').value;
+    var searchValue = document.getElementById('searchValue').value;
+    searchResult(method, searchValue);
+    document.getElementById('searchValue').value = '';
+  };
+searchButton.addEventListener('click', search);
+</script>
