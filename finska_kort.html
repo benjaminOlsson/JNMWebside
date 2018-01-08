@@ -6,6 +6,9 @@
   <table>
     <tbody>
       <tr>
+        <td>
+          <input type="text" id="searchField">
+        </td>
         <td id="selectData">
         </td>
         <td>
@@ -19,6 +22,10 @@
     </ul>
   </div>
 <script type="text/javascript">
+  //Variable for controlling the background color when displaying the charts
+  var bg;
+  //The register of all the charts available (because I don't have access to the database)
+  //Costal charts
   var rannikkoCharts = [
     {
       number: 'FS013',
@@ -26,7 +33,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs013-015.jpg',
       version: '10-6-2014',
       isbn: '978-952-266-230-9',
-      type: 'rannikko'
+      type: ['rannikko', 'kuorsalo', 'virolahti'],
+      serial: 13
     },
     {
       number: 'FS014',
@@ -34,7 +42,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs013-015.jpg',
       version: '10-6-2014',
       isbn: '978-952-7183-20-5',
-      type: 'ranniko'
+      type: ['rannikko', 'kotka', 'hamina', 'fredrikshamn'],
+      serial: 14
     },
     {
       number: 'FS015',
@@ -42,7 +51,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs013-015.jpg',
       version: '10-6-2014',
       isbn: '978-952-266-232-3',
-      type: 'ranniko'
+      type: ['rannikko', 'tiiskeri', 'kaunissaari', 'digskär', 'fagerö'],
+      serial: 15
     },
     {
       number: 'FS016',
@@ -50,7 +60,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs016-018.jpg',
       version: '31-8-2014',
       isbn: '978-952-266242-2',
-      type: 'ranniko'
+      type: ['rannikko', 'pellinki', 'loviisa', 'pellinge', 'lovisa'],
+      serial: 16
     },
     {
       number: 'FS017',
@@ -58,7 +69,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs016-018.jpg',
       version: '20-11-2014',
       isbn: '978-952-266-250-7',
-      type: 'ranniko'
+      type: ['rannikko', 'tallörn', 'glosjolm'],
+      serial: 17
     },
     {
       number: 'FS018',
@@ -66,7 +78,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs016-018.jpg',
       version: '30-11-2014',
       isbn: '978-952-266-251-4',
-      type: 'ranniko'
+      type: ['rannikko', 'helsinki', 'helsingin edusta', 'helsingfors', 'helsingfors inlop'],
+      serial: 18
     },
     {
       number: 'FS019',
@@ -74,7 +87,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs019-021.jpg',
       version: '30-11-2014',
       isbn: '978-952-266-252-1',
-      type: 'ranniko'
+      type: ['rannikko', 'porkkala', 'porkala'],
+      serial: 19
     },
     {
       number: 'FS020',
@@ -82,7 +96,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs019-021.jpg',
       version: '31-8-2014',
       isbn: '978-952-7183-10-6',
-      type: 'ranniko'
+      type: ['rannikko', 'jussarö', 'porkkalanselkä', 'porkkala', 'porkala', 'porkalafjärden'],
+      serial: 20
     },
     {
       number: 'FS021',
@@ -90,7 +105,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs019-021.jpg',
       version: '31-8-2014',
       isbn: '978-952-266-244-6',
-      type: 'ranniko'
+      type: ['rannikko', 'hanko', 'hangö', 'jussarö'],
+      serial: 21
     },
     {
       number: 'FS022',
@@ -98,7 +114,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs022-026.jpg',
       version: '31-8-2014',
       isbn: '978-952-266-245-3',
-      type: 'ranniko'
+      type: ['rannikko', 'högsåra', 'hanko', 'hangö'],
+      serial: 22
     },
     {
       number: 'FS023',
@@ -106,7 +123,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs022-026.jpg',
       version: '31-8-2014',
       isbn: '978-952-266-246-0',
-      type: 'ranniko'
+      type: ['rannikko', 'kemiö', 'kimito'],
+      serial: 23
     },
     {
       number: 'FS024',
@@ -114,15 +132,17 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs022-026.jpg',
       version: '20-8-2013',
       isbn: '978-952-266-136-4',
-      type: 'ranniko'
+      type: ['rannikko', 'jurmo', 'vänö'],
+      serial: 24
     },
     {
-      number: 'FS0125',
+      number: 'FS025',
       name: 'Korppoo, Korppo-Högsåra',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs022-026.jpg',
       version: '20-4-2013',
       isbn: '978-952-266-115-9',
-      type: 'ranniko'
+      type: ['rannikko', 'korppoo', 'korpo', 'högsåra'],
+      serial: 25
     },
     {
       number: 'FS026',
@@ -130,7 +150,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs022-026.jpg',
       version: '20-4-2013',
       isbn: '978-952-7183-08-3',
-      type: 'ranniko'
+      type: ['rannikko', 'korppoo', 'turku', 'korpo', 'åbo'],
+      serial: 26
     },
     {
       number: 'FS027',
@@ -138,7 +159,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs027-030.jpg',
       version: '10-6-2016',
       isbn: '978-952-7183-05-2',
-      type: 'ranniko'
+      type: ['rannikko', 'kökar', 'utö'],
+      serial: 27
     },
     {
       number: 'FS028',
@@ -146,7 +168,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs027-030.jpg',
       version: '10-9-2016',
       isbn: '978-952-7183-12-0',
-      type: 'ranniko'
+      type: ['rannikko', 'kihiti', 'skiftet'],
+      serial: 28
     },
     {
       number: 'FS029',
@@ -154,7 +177,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs027-030.jpg',
       version: '30-4-2015',
       isbn: '978-952-266--267-5',
-      type: 'ranniko'
+      type: ['rannikko', 'houtskari', 'lypyrtti', 'houtskär', 'lypertö'],
+      serial: 29
     },
     {
       number: 'FS030',
@@ -162,7 +186,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs027-030.jpg',
       version: '30-4-2015',
       isbn: '978-952-255-268-2',
-      type: 'ranniko'
+      type: ['rannikko', 'kumlinge'],
+      serial: 30
     },
     {
       number: 'FS031',
@@ -170,7 +195,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs031-034.jpg',
       version: '30-11-2013',
       isbn: '978-952-266-142-5',
-      type: 'ranniko'
+      type: ['rannikko', 'lågskär'],
+      serial: 31
     },
     {
       number: 'FS032',
@@ -178,7 +204,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs031-034.jpg',
       version: '30-11-2013',
       isbn: '978-952-266-143-2',
-      type: 'ranniko'
+      type: ['rannikko', 'lemland'],
+      serial: 32
     },
     {
       number: 'FS033',
@@ -186,15 +213,17 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs031-034.jpg',
       version: '10-5-2014',
       isbn: '978-952-266-225-5',
-      type: 'ranniko'
+      type: ['rannikko', 'geta', 'vårdö'],
+      serial: 33
     },
     {
       number: 'FS034',
-      name: 'Lövskär',
+      name: 'Eckerö',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs031-034.jpg',
       version: '20-4-2013',
       isbn: '978-952-266-112-8',
-      type: 'ranniko'
+      type: ['rannikko', 'eckerö'],
+      serial: 34
     },
     {
       number: 'FS037',
@@ -202,7 +231,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs037.jpg',
       version: '20-4-2013',
       isbn: '978-952-266-112-8',
-      type: 'ranniko'
+      type: ['rannikko', 'lövskär'],
+      serial: 37
     },
     {
       number: 'FS040',
@@ -210,7 +240,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs040-042.jpg',
       version: '30-11-2014',
       isbn: '978-952-7183-11-3',
-      type: 'ranniko'
+      type: ['rannikko', 'isokari', 'enskär'],
+      serial: 40
     },
     {
       number: 'FS041',
@@ -218,7 +249,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs040-042.jpg',
       version: '30-11-2013',
       isbn: '978-952-266-144-9',
-      type: 'ranniko'
+      type: ['rannikko', 'rauma', 'raumo'],
+      serial: 41
     },
     {
       number: 'FS042',
@@ -226,7 +258,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs040-042.jpg',
       version: '20-8-2015',
       isbn: '978-952-255-363-4',
-      type: 'ranniko'
+      type: ['rannikko', 'pori', 'björneborg'],
+      serial: 42
     },
     {
       number: 'FS043',
@@ -234,7 +267,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs043-045.jpg',
       version: '10-2-2013',
       isbn: '978-952-266-104-3',
-      type: 'ranniko'
+      type: ['rannikko', 'merikarvia', 'sastmola'],
+      serial: 43
     },
     {
       number: 'FS044',
@@ -242,7 +276,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs043-045.jpg',
       version: '10-2-2013',
       isbn: '978-952-266-105-0',
-      type: 'ranniko'
+      type: ['rannikko', 'kaskinen', 'kristiinankaupunki', 'kaskö', 'kristinestad'],
+      serial: 44
     },
     {
       number: 'FS045',
@@ -250,7 +285,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs043-045.jpg',
       version: '10-9-2016',
       isbn: '978-952-7183-13-7',
-      type: 'ranniko'
+      type: ['rannikko', 'storkos', 'rövargrund'],
+      serial: 45
     },
     {
       number: 'FS046',
@@ -258,7 +294,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs046-049.jpg',
       version: '10-9-2016',
       isbn: '978-952-7183-14-4',
-      type: 'ranniko'
+      type: ['rannikko', 'bergö', 'södra björkön', 'björkön'],
+      serial: 46
     },
     {
       number: 'FS047',
@@ -266,7 +303,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs046-049.jpg',
       version: '20-2-2013',
       isbn: '978-952-266-106-7',
-      type: 'ranniko'
+      type: ['rannikko', 'holmögadd', 'ritgrund'],
+      serial: 47
     },
     {
       number: 'FS048',
@@ -274,7 +312,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs046-049.jpg',
       version: '20-2-2013',
       isbn: '978-952-266-107-4',
-      type: 'ranniko'
+      type: ['rannikko', 'vaasa', 'vaasan saaristo', 'vasa', 'vasa skärgård'],
+      serial: 48
     },
     {
       number: 'FS049',
@@ -282,7 +321,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs046-049.jpg',
       version: '20-2-2013',
       isbn: '978-952-266-108-1',
-      type: 'ranniko'
+      type: ['rannikko', 'mickelsöarna', 'mikkelinsaaret'],
+      serial: 49
     },
     {
       number: 'FS050',
@@ -290,7 +330,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs050-052.jpg',
       version: '30-4-2015',
       isbn: '978-952-266-269-9',
-      type: 'ranniko'
+      type: ['rannikko', 'stubben'],
+      serial: 50
     },
     {
       number: 'FS051',
@@ -298,7 +339,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs050-052.jpg',
       version: '10-9-2015',
       isbn: '978-952-266-366-5',
-      type: 'ranniko'
+      type: ['rannikko', 'pietarsaari', 'pietarsaaren edusta', 'jakobstad', 'jakobstads omnejd'],
+      serial: 51
     },
     {
       number: 'FS052',
@@ -306,7 +348,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs050-052.jpg',
       version: '10-6-2016',
       isbn: '978-952-7183-06-9',
-      type: 'ranniko'
+      type: ['rannikko', 'tankar'],
+      serial: 52
     },
     {
       number: 'FS053',
@@ -314,7 +357,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs053-055.jpg',
       version: '20-6-2013',
       isbn: '978-952-266-119-7',
-      type: 'ranniko'
+      type: ['rannikko', 'ohtakari', 'kalajoki'],
+      serial: 53
     },
     {
       number: 'FS054',
@@ -322,7 +366,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs053-055.jpg',
       version: '10-12-2011',
       isbn: '978-952-255-787-2',
-      type: 'ranniko'
+      type: ['rannikko', 'pyhäjoki'],
+      serial: 54
     },
     {
       number: 'FS055',
@@ -330,7 +375,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs053-055.jpg',
       version: '20-4-2016',
       isbn: '978-952-7183-02-1',
-      type: 'ranniko'
+      type: ['rannikko', 'raahe'],
+      serial: 55
     },
     {
       number: 'FS056',
@@ -338,15 +384,17 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs056-059.jpg',
       version: '31-10-2015',
       isbn: '978-952-255-369-6',
-      type: 'ranniko'
+      type: ['rannikko', 'hailuoto'],
+      serial: 56
     },
     {
       number: 'FS057',
-      name: 'Oulu, Uloåborg',
+      name: 'Oulu, Uleåborg',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs056-059.jpg',
       version: '31-10-2015',
       isbn: '978-952-266-370-2',
-      type: 'ranniko'
+      type: ['rannikko', 'oulu', 'uleåborg'],
+      serial: 57
     },
     {
       number: 'FS058',
@@ -354,7 +402,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs056-059.jpg',
       version: '10-11-2015',
       isbn: '978-952-255-371-9',
-      type: 'ranniko'
+      type: ['rannikko', 'ulkokruuni'],
+      serial: 58
     },
     {
       number: 'FS059',
@@ -362,7 +411,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs056-059.jpg',
       version: '10-11-2015',
       isbn: '978-952-266-372-6',
-      type: 'ranniko'
+      type: ['rannikko', 'kemi', 'tornio', 'torneå'],
+      serial: 59
     },
     {
       number: 'FS060',
@@ -370,9 +420,11 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs060.jpg',
       version: '31-10-2015',
       isbn: '978-952-266-373-3',
-      type: 'ranniko'
+      type: ['rannikko', 'oulu', 'oulunportti', 'kemi 1', 'uleåborg'],
+      serial: 60
     },
   ];
+  //Char catalog
   var chartFolios = [
     {
       number: 'FBA',
@@ -380,7 +432,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fba.png',
       version: '20-3-2016',
       isbn: '978-952-7183-00-7',
-      type: 'folio'
+      type: ['folio', 'viipuri', 'helsinki', 'viborg', 'helsingfors', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBA'
     },
     {
       number: 'FBB',
@@ -388,7 +441,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBB.png',
       version: '31-3-2015',
       isbn: '978-952-266-262-0',
-      type: 'folio'
+      type: ['folio', 'helsinki', 'parainen', 'pargas', 'helsingfors', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBB'
     },
     {
       number: 'FBC',
@@ -396,7 +450,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/MerikarttasarjaC_kansi2015_rgb.png',
       version: '10-3-2015',
       isbn: '978-952-266-261-3',
-      type: 'folio'
+      type: ['folio', 'åland', 'ahvenanmaa', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBC'
     },
     {
       number: 'FBD',
@@ -404,7 +459,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBD.jpg',
       version: '28-2-2014',
       isbn: '978-952-266-149-4',
-      type: 'folio'
+      type: ['folio', 'turku', 'turunmaan saaristo', 'åbo', 'åbolands skärgård', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBD'
     },
     {
       number: 'FBE',
@@ -412,7 +468,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBE.jpg',
       version: '31-3-2014',
       isbn: '978-952-266-150-0',
-      type: 'folio'
+      type: ['folio', 'selkämeri', 'bottenhavet', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBE'
     },
     {
       number: 'FBF',
@@ -420,7 +477,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBF2017.jpg',
       version: '2017',
       isbn: '978-952-7183-25-0',
-      type: 'folio'
+      type: ['folio', 'merenkurkku', 'kvarken', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBF'
     },
     {
       number: 'FBG',
@@ -428,7 +486,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBG.jpg',
       version: '20-1-2012',
       isbn: '978-952-266-360-3',
-      type: 'folio'
+      type: ['folio', 'perämeri', 'bottenviken', 'rannikko', 'kust', 'kusten'],
+      serial: 'FBG'
     },
     {
       number: 'FBJ',
@@ -436,7 +495,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/j_cover.jpg',
       version: '31-12-2013',
       isbn: '978-952-266-148-7',
-      type: 'folio'
+      type: ['folio', 'heinola', 'lahti', 'jyväskylä', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBJ'
     },
     {
       number: 'FBK',
@@ -444,7 +504,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBK.jpg',
       version: '31-5-2007',
       isbn: '978-952-49-0521-6',
-      type: 'folio'
+      type: ['folio', 'keitele', 'keiteleen kanava', 'kanava', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBK'
     },
     {
       number: 'FBL',
@@ -452,7 +513,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBK.jpg',
       version: '31-5-2012',
       isbn: '978-952-255-798-8',
-      type: 'folio'
+      type: ['folio', 'lappeenranta', 'savonlinna', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBL'
     },
     {
       number: 'FBM',
@@ -460,7 +522,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBM.png',
       version: '31-1-2016',
       isbn: '978-952-7183-01-4',
-      type: 'folio'
+      type: ['folio', 'savonlinna', 'kuopio', 'iisalmi', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBM'
     },
     {
       number: 'FBN',
@@ -468,7 +531,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBN.jpg',
       version: '20-5-2010',
       isbn: '978-952-266-241-5',
-      type: 'folio'
+      type: ['folio', 'tampere', 'virrat', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBN'
     },
     {
       number: 'FBO',
@@ -476,7 +540,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBO.jpg',
       version: '10-5-2013',
       isbn: '978-952-266-101-2',
-      type: 'folio'
+      type: ['folio', 'tampere', 'hämeenlinna', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBO'
     },
     {
       number: 'FBP',
@@ -484,7 +549,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fbp.jpg',
       version: '10-2-2014',
       isbn: '978-952-266-220-0',
-      type: 'folio'
+      type: ['folio', 'valkeakoski', 'längenmäki', 'hauho', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBP'
     },
     {
       number: 'FBR',
@@ -492,7 +558,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fbp.jpg',
       version: '20-5-2013',
       isbn: '978-952-266-102-9',
-      type: 'folio'
+      type: ['folio', 'joensuu', 'Nurmes', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBR'
     },
     {
       number: 'FBS',
@@ -500,7 +567,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/FBS.jpg',
       version: '10-1-2000',
       isbn: '978-952-7183-04-5',
-      type: 'folio'
+      type: ['folio', 'saimaa', 'saimaan kanava', 'saimaan kanavan kartasto', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBS'
     },
     {
       number: 'FBT',
@@ -508,7 +576,8 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fbt.jpg',
       version: '31-5-2011',
       isbn: '978-952-255-783-4',
-      type: 'folio'
+      type: ['folio', 'oulunjärvi', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBT'
     },
     {
       number: 'FBV',
@@ -516,315 +585,352 @@
       img: 'http://www.johnnurminenmarine.com/2012/upload/fbv.jpg',
       version: '10-3-2011',
       isbn: '978-952-255-782-7',
-      type: 'folio'
+      type: ['folio', 'savonlinna', 'joensuu', 'järvi', 'sisävesi', 'insjö'],
+      serial: 'FBJ'
     }
   ];
+  //Inland charts
   var sisavesiCharts = [
     {
-      number: 446,
+      number: 'FI446',
       name: 'Konnevesi-Niinivesi-Iisvesi, 1:40 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fi446-452.jpg',
       version: '20-1-2005',
       isbn: '978-952-266-124-1',
-      type: 'sisavesi'
+      type: ['sisavesi', 'konnevesi', 'niinivesi', 'iisvesi'],
+      serial: 446
     },
     {
-      number: 447,
+      number: 'FI447',
       name: 'Konnevesi-Virmavesi, 1:40 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fi446-452.jpg',
       version: '20-1-2005',
       isbn: '978-952-266-125-8',
-      type: 'sisavesi'
+      type: ['sisavesi', 'konnevesi', 'virmavesi'],
+      serial: 447
     },
     {
-      number: 452,
-      name: 'Pilavesi-Nilakka, 1:50 000',
+      number: 'FI452',
+      name: 'Pielavesi-Nilakka, 1:50 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fi446-452.jpg',
       version: '10-1-2006',
       isbn: '978-952-266-126-5',
-      type: 'sisavesi'
+      type: ['sisavesi', 'pielavesi', 'nilakka'],
+      serial: 452
     },
     {
-      number: 480,
-      name: 'Konnevesi-Niinivesi-Iisvesi, 1:50 000',
+      number: 'FI480',
+      name: 'Inarijärvi, 1:50 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fi480.jpg',
       version: '30-9-2011',
       isbn: '978-952-255-786-5',
-      type: 'sisavesi'
+      type: ['sisavesi', 'iniari', 'järvi', 'inarijärvi'],
+      serial: 480
     },
     {
-      number: 481,
+      number: 'FI481',
       name: 'Puula, 1:50 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fi481.jpg',
       version: '10-6-2010',
       isbn: '978-952-7183-09-0',
-      type: 'sisavesi'
+      type: ['sisavesi', 'puula'],
+      serial: 481
     },
     {
-      number: 482,
+      number: 'FI482',
       name: 'Vuotjärvi-Syväri, 1:40 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/FI4821-–-kopio.jpg',
       version: '2017',
       isbn: '978-952-7183-26-7',
-      type: 'sisavesi'
+      type: ['sisavesi', 'vuotjärvi', 'syväri', 'järvi'],
+      serial: 482
     },
   ];
+  //The big area charts
   var yleisCharts = [
     {
-      number: 921,
+      number: 'FS921',
       name: 'Vuoksen vesistö, Vuoksens vattendrag, 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs921.jpg',
       version: '30-4-2014',
       isbn: '978-952-266-227-9',
-      type: 'yleis'
+      type: ['yleiskartat', 'vuoksen vesistö'],
+      serial: 921
     },
     {
-      number: 935,
+      number: 'FS935',
       name: 'Eteläinen Ahvenanmeri, Södra Ålandshav, 1:100 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs935.jpg',
       version: '10-5-2014',
       isbn: '978-952-266-228-6',
-      type: 'yleis'
+      type: ['yleiskartat', 'ahvenanmeri', 'ålands hav', 'ahvenanmaa', 'åland', 'eteläinen ahvenanmeri', 'södra ålandshav'],
+      serial: 935
     },
     {
-      number: 951,
+      number: 'FS951',
       name: 'Itäinen Suomenlahti, Östra Finska viken, 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs951.jpg',
       version: '20-9-2015',
       isbn: '978-952-266-365-8',
-      type: 'yleis'
+      type: ['yleiskartat', 'suomenlahti', 'finska viken', 'itäinen', 'östra', 'itäinen suomenlahti', 'östra finskaviken'],
+      serial: 951
     },
     {
-      number: 952,
+      number: 'FS952',
       name: 'Läntinen Suomenlahti, Västra Finska viken, 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs952.jpg',
       version: '20-9-2015',
       isbn: '978-952-266-817-6',
-      type: 'yleis'
+      type: ['yleiskartat', 'suomenlahti', 'finska viken', 'läntinen suomenlahti', 'västra finska viken'],
+      serial: 952
     },
     {
-      number: 953,
+      number: 'FS953',
       name: 'Saaristomeri, Skärgårdshavet, 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs935.jpg',
       version: '10-5-2014',
       isbn: '978-952-266-229-3',
-      type: 'yleis'
+      type: ['yleiskartat', 'saaristomeri', 'skärgårdshavet', 'åbo', 'turku', 'ahvenanmaa', 'åland'],
+      serial: 953
     },
     {
-      number: 954,
-      name: 'Pohjois itämeren itäosa, Norra Östersjön, östra delen, 1:250 000',
+      number: 'FS954',
+      name: 'Pohjois-Itämeren itäosa, Norra Östersjön, östra delen, 1:250 000',
       img: '',
-      version: '2017',
+      version: '10-5-2017',
       isbn: '978-952-266-229-3',
-      type: 'yleis'
+      type: ['yleiskartat', 'itämeri', 'östersjön', 'pohjois itämeren itäosa', 'pohjois-itämeren itäosa', 'norra östersjön', 'nörra östersjön, östra delen'],
+      serial: 954
     },
     {
-      number: 955,
+      number: 'FS955',
       name: 'Eteläinen Selkämeri, Södra Bottenhavet, 1:250 000',
       img: '',
       version: '10-10-2016',
       isbn: '978-952-7183-15-1',
-      type: 'yleis'
+      type: ['yleiskartat', 'selkämeri', 'bottenhavet', 'eteläinen selkämeri', 'södra bottenhavet'],
+      serial: 955
     },
     {
-      number: 956,
+      number: 'FS956',
       name: 'Pohjoinen Selkämeri, Norra Bottenhavet, 1:250 000',
       img: '',
       version: '10-10-2016',
       isbn: '978-952-7183-16-8',
-      type: 'yleis'
+      type: ['yleiskartat', 'selkämeri', 'bottenhavet', 'norra bottenhavet', 'pohjoinen selkämeri'],
+      serial: 956
     },
     {
-      number: 957,
+      number: 'FS957',
       name: 'Merenkurkku, Norra Kvarken, 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs957.jpg',
       version: '10-10-2016',
       isbn: '978-952-7183-17-5',
-      type: 'yleis'
+      type: ['yleiskartat', 'merenkurkku', 'kvarken', 'norra kvarken'],
+      serial: 957
     },
     {
-      number: 958,
+      number: 'FS958',
       name: 'Perämeri, Bottenviken, 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs931-958.jpg',
       version: '10-11-2015',
       isbn: '978-952-266-374-0',
-      type: 'yleis'
+      type: ['yleiskartat', 'perämeri', 'bottenviken'],
+      serial: 958
     }
   ];
+  //Harbour charts
   var satamaCharts = [
     {
-      number: 101,
+      number: 'FS101',
       name: 'Haapasaari, Saukko & Orregrund, 1:20 000\/ 1:250 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs101.jpg',
       version: '10-6-2014',
       isbn: '978-952-266-233-0',
-      type: 'satama'
+      type: ['satama', 'haapasaari', 'saukko', 'orregrund'],
+      serial: 101
     },
     {
-      number: 103,
-      name: 'Valko, Pellinki, Kilpilahti & Kalkkiranta, Valkom, Pellinge, Sköldvik & Kalkstrand, 1:20 000',
+      number: 'FS103',
+      name: 'Valko, Pellinki, Kilpilahti & Kalkkiranta\nValkom, Pellinge, Sköldvik & Kalkstrand, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs103.jpg',
       version: '20-11-2014',
       isbn: '978-952-266-254-5',
-      type: 'satama'
+      type: ['satama', 'haapasaari', 'saukko', 'orregrund'],
+      serial: 101
     },
     {
-      number: 105,
-      name: 'Lövskär, Askgrund & Parainen, Lövskär, Askgrund & Pargas, 1:25 000',
+      number: 'FS105',
+      name: 'Lövskär, Askgrund & Parainen\nLövskär, Askgrund & Pargas, 1:25 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs105.jpg',
       version: '20-4-2013',
       isbn: '978-952-266-121-0',
-      type: 'satama'
+      type: ['satama', 'lövskär', 'askgrund', 'parainen', 'pargas'],
+      serial: 105
     },
     {
-      number: 109,
-      name: 'Kumlinge, Lappo, Jurmo, Vuosnainen & Lypyrtti, Kumlinge, Lappo, Jurmo, Osnäs & Lypertö, 1:20 000',
+      number: 'FS109',
+      name: 'Kumlinge, Lappo, Jurmo, Vuosnainen & Lypyrtti\nKumlinge, Lappo, Jurmo, Osnäs & Lypertö, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs109.jpg',
       version: '30-4-2015',
       isbn: '978-952-266-270-5',
-      type: 'satama'
+      type: ['satama', 'kumlinge', 'lappo', 'jurmo', 'vuosnainen', 'lypyrtti', 'lypertö'],
+      serial: 109
     },
     {
-      number: 109,
-      name: 'Kumlinge, Lappo, Jurmo, Vuosnainen & Lypyrtti, Kumlinge, Lappo, Jurmo, Osnäs & Lypertö, 1:20 000',
-      img: 'http://www.johnnurminenmarine.com/2012/upload/fs109.jpg',
-      version: '30-4-2015',
-      isbn: '978-952-266-270-5',
-      type: 'satama'
-    },
-    {
-      number: 113,
-      name: 'Merikarvia, Kristiinankaupunki & Kaskinen, Sastmola, Kristinestad & Kaskö, 1:20 000',
+      number: 'FS113',
+      name: 'Merikarvia, Kristiinankaupunki & Kaskinen\nSastmola, Kristinestad & Kaskö, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs109.jpg',
       version: '10-2-2013',
       isbn: '978-952-266-110-4',
-      type: 'satama'
+      type: ['satama', 'merikarvia', 'kristiinankaupunki', 'kaskinen', 'sastmola', 'kristinestad', 'kaskö'],
+      serial: 113
     },
     {
-      number: 115,
-      name: 'Veckargrund, Nygrund, Vaasa & Raippaluoto, Veckargrund, Nygrund, Vasa & Replot, 1:20 000',
+      number: 'FS115',
+      name: 'Veckargrund, Nygrund, Vaasa & Raippaluoto\nVeckargrund, Nygrund, Vasa & Replot, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs115.jpg',
       version: '20-2-2013',
       isbn: '978-952-266-111-1',
-      type: 'satama'
+      type: ['satama', 'veckargrund', 'nygrund', 'vaasa', 'raippaluoto', 'vasa', 'replot'],
+      serial: 115
     },
     {
-      number: 117,
+      number: 'FS117',
       name: 'Yksipihlaja & Rahja, Yxpila & Rahja, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs117.jpg',
       version: '20-6-2013',
       isbn: '978-952-266-222-7',
-      type: 'satama'
+      type: ['satama', 'yksipihlaja', 'rahja', 'yxpila', 'rahja'],
+      serial: 117
     },
     {
-      number: 119,
-      name: 'Raahe & Oulu, Brahestad & Uleoborg, 1:20 000 \/1:10 000',
+      number: 'FS119',
+      name: 'Raahe & Oulu\nBrahestad & Uleoborg, 1:20 000 \/1:10 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs119.jpg',
       version: '20-4-2016',
       isbn: '978-952-7183-03-8',
-      type: 'satama'
+      type: ['satama', 'raahe', 'oulu', 'brahestad', 'uleåborg'],
+      serial: 119
     },
     {
-      number: 125,
+      number: 'FS125',
       name: 'Tahkoluoto-Mäntyluoto, 1:10 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs125.jpg',
       version: '20-8-2015',
       isbn: '978-952-266-362-7',
-      type: 'satama'
+      type: ['satama', 'tahkoluoto', 'mäntyluoto'],
+      serial: 125
     },
     {
-      number: 127,
+      number: 'FS1127',
       name: 'Rauma, Raumo, 1:20 000\/ 1:10 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs127.jpg',
       version: '30-11-2013',
       isbn: '978-952-266-141-8',
-      type: 'satama'
+      type: ['satama', 'rauma', 'raumo'],
+      serial: 127
     },
     {
-      number: 132,
+      number: 'FS132',
       name: 'Porkkala-Kantvik, Porkala-Kantvik, 1:25 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs132.jpg',
       version: '30-11-2014',
       isbn: '978-952-266-255-2',
-      type: 'satama'
+      type: ['satama', 'porkkala', 'kantvik', 'porkala'],
+      serial: 132
     },
     {
-      number: 134,
+      number: 'FS134',
       name: 'Hamina, Fredrikshamn, 1:10 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs134-138.jpg',
       version: '10-6-2014',
       isbn: '978-952-7183-18-2',
-      type: 'satama'
+      type: ['satama', 'hamina', 'fredrikshamn'],
+      serial: 134
     },
     {
-      number: 136,
+      number: 'FS136',
       name: 'Hanko, Hangö, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs136.jpg',
       version: '31-8-2014',
       isbn: '978-952-266-247-7',
-      type: 'satama'
+      type: ['satama', 'hanko', 'hangö'],
+      serial: 136
     },
     {
-      number: 138,
+      number: 'FS138',
       name: 'Kotka, 1:10 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs134-138.jpg',
       version: '10-6-2014',
       isbn: '978-952-7183-19-9',
-      type: 'satama'
+      type: ['satama', 'kotka'],
+      serial: 138
     },
     {
-      number: 160,
+      number: 'FS160',
       name: 'Maarianhamina, Mariehamn, 1:25 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs160-162.jpg',
       version: '30-11-2013',
       isbn: '978-952-266-145-6',
-      type: 'satama'
+      type: ['satama', 'maarianhamina', 'mariehamn'],
+      serial: 160
     },
     {
-      number: 162,
+      number: 'FS162',
       name: 'Långnäs-Sottunga, 1:25 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs160-162.jpg',
       version: '30-11-2013',
       isbn: '978-952-266-146-3',
-      type: 'satama'
+      type: ['satama', 'långnäs', 'sottugga'],
+      serial: 162
     },
     {
-      number: 167,
+      number: 'FS167',
       name: 'Utö, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs167.jpg',
       version: '10-6-2016',
       isbn: '978-952-7183-07-6',
-      type: 'satama'
+      type: ['satama', 'utö'],
+      serial: 167
     },
     {
-      number: 190,
+      number: 'FS190',
       name: 'Turku, Åbo, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs190.jpg',
       version: '20-8-2013',
       isbn: '978-952-266-139-5',
-      type: 'satama'
+      type: ['satama', 'turku', 'åbo'],
+      serial: 190
     },
     {
-      number: 191,
+      number: 'FS191',
       name: 'Helsinki, Helsingfors, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs191-192.jpg',
       version: '30-11-2014',
       isbn: '978-952-266-256-9',
-      type: 'satama'
+      type: ['satama', 'helsinki', 'helsingfors'],
+      serial: 191
     },
     {
-      number: 192,
+      number: 'FS192',
       name: 'Vuosaari, Nordsjö, 1:20 000',
       img: 'http://www.johnnurminenmarine.com/2012/upload/fs191-192.jpg',
       version: '20-11-2014',
       isbn: '978-952-266-257-6',
-      type: 'satama'
+      type: ['satama', 'vuosaari', 'nordsjö'],
+      serial: 192
     },
   ];
+  //Getting fields by id
+  //The div that contains the UL with all the charts
   var showCharts = document.getElementById('showCharts');
+  //UL that will show the charts
   var chartList = document.getElementById('theCharts');
+  //text input field
+  var searchField = document.getElementById('searchField');
+  //The function for displaying the charts in the browser
   var showCharts = function(charts){
-    var bg = 1;
     charts.forEach(function(chart){
       var listLi = document.createElement('LI');
       listLi.className = 'testList';
@@ -851,13 +957,90 @@
       var listDate = document.createElement('h4');
       listDate.className = 'testDate';
       listDiv.appendChild(listDate);
-      listDate.innerText = 'Oikaisu päivämäärä: ' + chart.version;
+      listDate.innerText = 'Oikaisupäivämäärä: ' + chart.version;
       var listIsbn = document.createElement('h5');
       listIsbn.className = 'testIsbn';
       listDiv.appendChild(listIsbn);
       listIsbn.innerText = 'ISBN: ' + chart.isbn;
     });
   };
+  //The function for searching the chart tags (type in the register)
+  var searchCharts = function(charts, search){
+    charts.forEach(function(chart){
+      for(let i = 0; i < chart.type.length; i++){
+        if(search.toLowerCase() === chart.type[i]){
+          var listLi = document.createElement('LI');
+          listLi.className = 'testList';
+          chartList.appendChild(listLi);
+          var listDiv = document.createElement('div');
+          listDiv.className += 'testDiv';
+          if((bg % 2) === 0){
+            listDiv.className += ' gray';
+          }
+          ++bg;
+          listLi.appendChild(listDiv);
+          var listPic = document.createElement('img');
+          listPic.className = 'testImg';
+          listPic.src = chart.img;
+          listDiv.appendChild(listPic);
+          var listHeader = document.createElement('h2');
+          listHeader.className = 'testHeader';
+          listDiv.appendChild(listHeader);
+          listHeader.innerText = chart.name;
+          var listNumber = document.createElement('h3');
+          listNumber.className = 'testNumber';
+          listDiv.appendChild(listNumber);
+          listNumber.innerText = 'Tuotenumero: ' + chart.number;
+          var listDate = document.createElement('h4');
+          listDate.className = 'testDate';
+          listDiv.appendChild(listDate);
+          listDate.innerText = 'Oikaisupäivämäärä: ' + chart.version;
+          var listIsbn = document.createElement('h5');
+          listIsbn.className = 'testIsbn';
+          listDiv.appendChild(listIsbn);
+          listIsbn.innerText = 'ISBN: ' + chart.isbn;
+        }
+      }
+    });
+  };
+  //The function for searching by chart number
+  var searchByNumber = function(charts, search){
+    search = parseInt(search);
+    charts.forEach(function(chart){
+      if(chart.serial === search){
+        var listLi = document.createElement('LI');
+        listLi.className = 'testList';
+        chartList.appendChild(listLi);
+        var listDiv = document.createElement('div');
+        listDiv.className += 'testDiv';
+        if((bg % 2) === 0){
+          listDiv.className += ' gray';
+        }
+        listLi.appendChild(listDiv);
+        var listPic = document.createElement('img');
+        listPic.className = 'testImg';
+        listPic.src = chart.img;
+        listDiv.appendChild(listPic);
+        var listHeader = document.createElement('h2');
+        listHeader.className = 'testHeader';
+        listDiv.appendChild(listHeader);
+        listHeader.innerText = chart.name;
+        var listNumber = document.createElement('h3');
+        listNumber.className = 'testNumber';
+        listDiv.appendChild(listNumber);
+        listNumber.innerText = 'Tuotenumero: ' + chart.number;
+        var listDate = document.createElement('h4');
+        listDate.className = 'testDate';
+        listDiv.appendChild(listDate);
+        listDate.innerText = 'Oikaisupäivämäärä: ' + chart.version;
+        var listIsbn = document.createElement('h5');
+        listIsbn.className = 'testIsbn';
+        listDiv.appendChild(listIsbn);
+        listIsbn.innerText = 'ISBN: ' + chart.isbn;
+      }
+    });
+  };
+  //Making the select html tag with options (because it did not work when making it as html)
   var etsi = document.getElementById('etsi');
   var tableData = document.getElementById('selectData');
   var select = document.createElement('select');
@@ -879,6 +1062,9 @@
   var option5 = document.createElement('option');
   option5.value = 'folio';
   option5.innerText = 'Kartta sarjat';
+  var option6 = document.createElement('option');
+  option6.value = 'numero';
+  option6.innerText = 'Numero';
   tableData.appendChild(select);
   select.id = 'selectType';
   var selectType = document.getElementById('selectType');
@@ -888,30 +1074,76 @@
   selectType.appendChild(option3);
   selectType.appendChild(option4);
   selectType.appendChild(option5);
+  selectType.appendChild(option6);
+  //The search function
   function searchReq(){
+    bg = 1;
     while(theCharts.firstChild){
       theCharts.removeChild(theCharts.firstChild);
     }
     if(selectType.value === 'kaikki'){
-      showCharts(chartFolios);
-      showCharts(rannikkoCharts);
-      showCharts(sisavesiCharts);
-      showCharts(yleisCharts);
-      showCharts(satamaCharts);
+      if(searchField.value !== ''){
+        searchCharts(chartFolios, searchField.value);
+        searchCharts(rannikkoCharts, searchField.value);
+        searchCharts(sisavesiCharts, searchField.value);
+        searchCharts(yleisCharts, searchField.value);
+        searchCharts(satamaCharts, searchField.value);
+        searchField.value = '';
+      }else{
+        showCharts(chartFolios);
+        showCharts(rannikkoCharts);
+        showCharts(sisavesiCharts);
+        showCharts(yleisCharts);
+        showCharts(satamaCharts);
+      }
     }else if(selectType.value === 'rannikko'){
-      showCharts(rannikkoCharts);
+      if(searchField.value !== ''){
+        searchCharts(rannikkoCharts, searchField.value);
+        searchField.value = '';
+      }else{
+        showCharts(rannikkoCharts);
+      }
     }else if(selectType.value === 'satama'){
-      showCharts(satamaCharts);
+      if(searchField.value !== ''){
+        searchCharts(satamaCharts, searchField.value);
+        searchField.value = '';
+      }else{
+        showCharts(satamaCharts);
+      }
     }else if(selectType.value === 'sisavesi'){
-      showCharts(sisavesiCharts);
+      if(searchField.value !== ''){
+        searchCharts(sisavesiCharts, searchField.value);
+        searchField.value = '';
+      }else{
+        showCharts(sisavesiCharts);
+      }
     }else if(selectType.value === 'yleis'){
-      showCharts(yleisCharts);
+      if(searchField.value !== ''){
+        searchCharts(yleisCharts, searchField.value);
+        searchField.value = '';
+      }else{
+        showCharts(yleisCharts);
+      }
     }else if(selectType.value === 'folio'){
-      showCharts(chartFolios);
+      if(searchField.value !== ''){
+        searchCharts(chartFolios, searchField.value);
+        searchField.value = '';
+      }else{
+        showCharts(chartFolios);
+      }
+    }else if(selectType.value === 'numero'){
+      searchByNumber(rannikkoCharts, searchField.value);
+      searchByNumber(satamaCharts, searchField.value);
+      searchByNumber(sisavesiCharts, searchField.value);
+      searchByNumber(yleisCharts, searchField.value);
+      searchField.value = '';
     }
   };
+  //Adding the search function to the button
   etsi.addEventListener('click', searchReq);
+  //Loading all the charts when the window loads
   window.onload = function(){
+    bg = 1;
     showCharts(chartFolios);
     showCharts(rannikkoCharts);
     showCharts(sisavesiCharts);

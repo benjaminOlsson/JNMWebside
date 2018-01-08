@@ -1,0 +1,14 @@
+#jalleenmyyjatTable{
+  border: 1px solid black;
+}
+.jalleenmyyjatTableHead{
+  width: 500px;
+  text-align: left;
+}
+#jalleenmyyjatTableBody{
+  background-color: lightgray;
+}
+td{
+  height: 40px;
+  border: 0;
+}
