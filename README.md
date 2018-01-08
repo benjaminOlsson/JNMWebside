@@ -1,2 +1,2 @@
 # JNMWebside
-Some small functions I have make for a website
+Some small functions I have made for a website
