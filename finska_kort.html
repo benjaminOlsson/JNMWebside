@@ -29,12 +29,15 @@
   </table>
   <div id="showCharts">
     <img id="karttaPic">
-    <ul id="theCharts">
-    </ul>
+    <div id="cL">
+      <ul id="theCharts">
+      </ul>
+    </div>
   </div>
 <script type="text/javascript">
   //Variable for controlling the background color when displaying the charts
   var bg;
+  var etsiOn = 0;
   // Getting access to the buttons
   var rannikkoButton = document.getElementById('rannikkoButton');
   var sisavesiButton = document.getElementById('sisavesiButton');
@@ -43,11 +46,11 @@
   var sarjaButton = document.getElementById('sarjaButton');
   var etsiButton = document.getElementById('etsiButton');
   // Adding listeners to the buttons
-  rannikkoButton.addEventListener('click', function(){showTheCharts(rannikkoCharts, pics);});
-  sisavesiButton.addEventListener('click', function(){showTheCharts(sisavesiCharts, pics);});
-  satamaButton.addEventListener('click', function(){showTheCharts(satamaCharts, pics);});
-  yleisButton.addEventListener('click', function(){showTheCharts(yleisCharts, pics);});
-  sarjaButton.addEventListener('click', function(){showTheCharts(chartFolios, pics);});
+  rannikkoButton.addEventListener('click', function(){ etsiOn = 0; showTheCharts(rannikkoCharts, pics);});
+  sisavesiButton.addEventListener('click', function(){ etsiOn = 0; showTheCharts(sisavesiCharts, pics);});
+  satamaButton.addEventListener('click', function(){ etsiOn = 0; showTheCharts(satamaCharts, pics);});
+  yleisButton.addEventListener('click', function(){ etsiOn = 0; showTheCharts(yleisCharts, pics);});
+  sarjaButton.addEventListener('click', function(){ etsiOn = 0; showTheCharts(chartFolios, pics);});
   // Search function
   //The register of all the charts available (because I don't have access to the database)
   //Costal charts
@@ -1015,6 +1018,11 @@
   }
   // The function that makes the list
   var makeList = function(chart){
+    if(etsiOn === 1){
+      document.getElementById('cL').style.height = '700px';
+    }else{
+      document.getElementById('cL').style.height = '300px';
+    }
       var listLi = document.createElement('LI');
       listLi.className = 'testList';
       chartList.appendChild(listLi);
@@ -1025,26 +1033,35 @@
       }
       ++bg;
       listLi.appendChild(listDiv);
+      var table = document.createElement('table');
+      listDiv.appendChild(table);
+      var tr = document.createElement('tr');
+      table.appendChild(tr);
+      var td1 = document.createElement('td');
+      td1.className = 'data1';
+      tr.appendChild(td1);
       var listHeader = document.createElement('h2');
       listHeader.className = 'testHeader';
-      listDiv.appendChild(listHeader);
       listHeader.innerText = chart.name;
+      td1.appendChild(listHeader);
       var listNumber = document.createElement('h3');
       listNumber.className = 'testNumber';
-      listDiv.appendChild(listNumber);
       listNumber.innerText = 'Tuotenumero: ' + chart.number;
+      td1.appendChild(listNumber);
       var listDate = document.createElement('h4');
       listDate.className = 'testDate';
-      listDiv.appendChild(listDate);
       listDate.innerText = 'Oikaisupäivämäärä: ' + chart.version;
+      td1.appendChild(listDate);
       var listIsbn = document.createElement('h5');
       listIsbn.className = 'testIsbn';
-      listDiv.appendChild(listIsbn);
       listIsbn.innerText = 'ISBN: ' + chart.isbn;
+      td1.appendChild(listIsbn);
+      var td2 = document.createElement('td');
+      tr.appendChild(td2);
       var listSerial = document.createElement('div');
       listSerial.className = 'listSerial';
       listSerial.innerText = chart.serial;
-      listDiv.appendChild(listSerial);
+      td2.appendChild(listSerial);
   }
   //The function for displaying the charts in the browser
   var showTheCharts = function(charts, pics){
@@ -1078,7 +1095,6 @@
             chartList.appendChild(li);
             var img = document.createElement('img');
             img.className = 'tempImg';
-
             if(chart.type[0] === 'rannikko'){
               img.src = pics[0].img;
             }else if(chart.type[0] === 'folio'){
@@ -1098,22 +1114,10 @@
       }
     });
   };
-  //The function for searching by chart number
-  var searchByNumber = function(charts, search){
-    search = parseInt(search);
-    charts.forEach(function(chart){
-      if(chart.serial === search){
-        addHeader(chart.type[0], pics);
-        makeList(chart);
-      }
-    });
-  };
   // Function for making a the check buttons
   // Creating the search
   var searchReq = function(){
-
     var buttons = ['Rannikkokartat', 'Sisävesikartat', 'Satamakartat', 'Yleiskartat', 'Karttasarjat', 'Kaikki'];
-
     if(chartList.childNodes.length > 0){
       var pic = document.getElementById('karttaPic');
       pic.style.display = 'none';
@@ -1126,11 +1130,20 @@
       var searchDiv = document.createElement('div');
       searchDiv.id = 'searchDiv';
       showCharts.insertAdjacentElement('afterbegin', searchDiv);
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.id = 'searchField';
+      input.placeholder = 'Etsi karttoja';
+      searchDiv.appendChild(input);
+      var inputButton = document.createElement('button');
+      inputButton.id = 'searchButton';
+      inputButton.innerText = 'Etsi';
+      searchDiv.appendChild(inputButton);
+      var inputButton = document.getElementById('searchButton');
       var table = document.createElement('table');
       searchDiv.appendChild(table);
       var tr = document.createElement('tr');
       table.appendChild(tr);
-
       for(let i = 0; i < buttons.length; i++){
         var td1 = document.createElement('td');
         tr.appendChild(td1);
@@ -1145,27 +1158,36 @@
         checkBox.className = 'checkBox';
         checkBox.id = buttons[i];
         td2.appendChild(checkBox);
+        if(buttons[i] === 'Kaikki'){
+          document.getElementById('Kaikki').checked = true;
+        }
+        document.getElementById(buttons[i]).addEventListener('change', function(){setCheck(buttons)});
       };
-
-      var input = document.createElement('input');
-      input.type = 'text';
-      input.id = 'searchField';
-      input.placeholder = 'Etsi karttoja';
-      searchDiv.appendChild(input);
-
-      var inputButton = document.createElement('button');
-      inputButton.id = 'searchButton';
-      inputButton.innerText = 'Etsi';
-      searchDiv.appendChild(inputButton);
-
-      var inputButton = document.getElementById('searchButton');
-
       inputButton.addEventListener('click', search);
     }
   };
+  // Set search to kaikki if no button is checked
+   var setCheck = function(buttons){
+     var check = 0;
+      for(let i = 0; i < buttons.length; i++){
+      if(document.getElementById(buttons[i]).checked === true){
+        ++check;
+      }
+    }
+    if(check === 0){
+      document.getElementById('Kaikki').checked = true;
+    }
+    for(let i = 0; i < buttons.length; i++){
+      if(document.getElementById(buttons[i]).checked === true){
+        if(buttons[i] !== 'Kaikki'){
+          document.getElementById('Kaikki').checked = false;
+        }
+      }
+    }
+  }
   // Search function
   var search = function(){
-
+    etsiOn = 1;
     var rannikko = document.getElementById('Rannikkokartat');
     var sisavesi = document.getElementById('Sisävesikartat');
     var satama = document.getElementById('Satamakartat');
@@ -1173,7 +1195,6 @@
     var sarja = document.getElementById('Karttasarjat');
     var kaikki = document.getElementById('Kaikki');
     var input = document.getElementById('searchField');
-
     if(chartList.childNodes.length > 0){
       var pic = document.getElementById('karttaPic');
       pic.style.display = 'none';
@@ -1182,29 +1203,27 @@
         chartList.removeChild(chartList.childNodes[0]);
       }
     }
-
     if(kaikki.checked === true){
       searchCharts(rannikkoCharts, input.value, pics);
       searchCharts(sisavesiCharts, input.value, pics);
       searchCharts(satamaCharts, input.value, pics);
       searchCharts(yleisCharts, input.value, pics);
       searchCharts(chartFolios, input.value, pics);
-    }else{
-      if(rannikko.checked === true){
-        searchCharts(rannikkoCharts, input.value, pics);
-      }
-      if(sisavesi.checked === true){
-        searchCharts(sisavesiCharts, input.value, pics);
-      }
-      if(satama.checked === true){
-        searchCharts(satamaCharts, input.value, pics);
-      }
-      if(yleis.checked === true){
-        searchCharts(yleisCharts, input.value, pics);
-      }
-      if(sarja.checked === true){
-        searchCharts(chartFolios, input.value, pics);
-      }
+    }
+    if(rannikko.checked === true){
+      searchCharts(rannikkoCharts, input.value, pics);
+    }
+    if(sisavesi.checked === true){
+      searchCharts(sisavesiCharts, input.value, pics);
+    }
+    if(satama.checked === true){
+      searchCharts(satamaCharts, input.value, pics);
+    }
+    if(yleis.checked === true){
+      searchCharts(yleisCharts, input.value, pics);
+    }
+    if(sarja.checked === true){
+      searchCharts(chartFolios, input.value, pics);
     }
   }
   //Loading all the charts when the window loads
